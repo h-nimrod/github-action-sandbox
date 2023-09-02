@@ -11,6 +11,7 @@ on:
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
+    if: startsWith(github.head_ref, 'release/v')
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -36,17 +37,7 @@ jobs:
       run: |
         echo "Detected version: $VERSION"
 
-    - name: Merge release PR
-      run: |
-        PRs=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-                   -H "Accept: application/vnd.github.v3+json" \
-                   "https://api.github.com/repos/${{ github.repository }}/pulls")
-        echo "$PRs"
-        for PR in $(echo "$PRs" | jq -r '.[] | select( .head | .ref | test("^release/v[0-9]+\\.[0-9]+\\.[0-9]+$")) | .number'); do
-          echo "match: PR #$PR"
-          curl -s -X PUT -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-               -H "Accept: application/vnd.github.v3+json" \
-               "https://api.github.com/repos/${{ github.repository }}/pulls/$PR/merge"
-        done
+    - name: Auto merge PR
+      uses: pascalgn/automerge-action@v0.15.6
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
