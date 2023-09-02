@@ -54,7 +54,6 @@ jobs:
 
   create-tag:
     needs: auto-merge
-    if: needs.auto-merge.outputs.IS_MERGED == 'true'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
