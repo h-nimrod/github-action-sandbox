@@ -50,6 +50,7 @@ jobs:
           echo "version=v$VERSION" >> $GITHUB_OUTPUT
         else
           echo "No matching PR found"
+        echo "version=''" >> $GITHUB_OUTPUT
         fi
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
