@@ -1,7 +1,10 @@
 name: Test github actions
 
 on:
-  push:
+  pull_request:
+    types:
+      - opened
+      - synchronize
     branches:
       - main
   schedule:
