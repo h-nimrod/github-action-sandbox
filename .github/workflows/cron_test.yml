@@ -41,7 +41,7 @@ jobs:
 
     - name: Auto merge PR
       uses: pascalgn/automerge-action@v0.15.6
-      with:
+      env:
         MERGE_LABELS: ""
         MERGE_METHOD: "merge"
         MERGE_COMMIT_MESSAGE: "automatic merge"
@@ -51,5 +51,4 @@ jobs:
         UPDATE_LABELS: ""
         UPDATE_METHOD: "merge"
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      env:
         LOG: "DEBUG"
