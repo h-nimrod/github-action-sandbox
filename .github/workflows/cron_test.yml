@@ -2,9 +2,6 @@ name: Test github actions
 
 on:
   pull_request:
-    types:
-      - synchronize
-      - opened
     branches:
       - main
   schedule:
@@ -14,7 +11,8 @@ on:
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
-    steps:
+    if: startsWith(github.head_ref, 'release/v')
+	steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
