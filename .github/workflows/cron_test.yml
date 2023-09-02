@@ -39,7 +39,7 @@ jobs:
         echo "Detected version: $VERSION"
 
     - name: Auto merge PR
-	  id: automerge
+      id: automerge
       run: |
         echo "version: $VERSION"
         echo $(gh pr list --base main --head release/v$VERSION --json number)
