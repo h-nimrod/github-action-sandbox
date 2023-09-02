@@ -1,0 +1,22 @@
+name: Create PR on push to release branches
+
+on:
+  push:
+    branches:
+      - 'release/v*.*.*'
+
+jobs:
+  create_pr:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Create PR
+      uses: repo-sync/pull-request@v2
+      with:
+        source_branch: ${{ github.ref }}
+        destination_branch: "main"
+        pr_title: "Release PR from ${{ github.ref }}"
+        pr_body: "This is an auto-generated PR for the release branch ${{ github.ref }}"
+        github_token: ${{ secrets.GITHUB_TOKEN }}
