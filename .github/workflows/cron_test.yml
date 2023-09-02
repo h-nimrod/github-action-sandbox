@@ -57,7 +57,7 @@ jobs:
 
   create-tag:
     needs: auto-merge
-    if: needs.auto-merge.outputs.version != ""
+    if: needs.auto-merge.outputs.version != ''
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
