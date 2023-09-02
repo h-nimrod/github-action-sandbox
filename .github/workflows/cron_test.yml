@@ -46,6 +46,16 @@ jobs:
           echo "Merged PR #$PR_NUMBER"
         else
           echo "No matching PR found"
+		  exit 1
         fi
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+  create-tag:
+    needs: auto-merge
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+    - name: test
+      run: |
+        echo "version: $VERSION"
