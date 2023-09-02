@@ -47,21 +47,26 @@ jobs:
         if [ "$PR_NUMBER" != "null" ]; then
           gh pr merge $PR_NUMBER --merge
           echo "Merged PR #$PR_NUMBER"
+          echo "version=v$VERSION" >> $GITHUB_OUTPUT
         else
           echo "No matching PR found"
         fi
-        echo "version=v$VERSION" >> $GITHUB_OUTPUT
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
   create-tag:
     needs: auto-merge
+    if: ${{ needs.auto-merge.outputs.version }} != ""
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: test
-      run: |
-        echo "version: $VERSION"
+    - name: Create Release
+      uses: actions/create-release@v1
       env:
-        VERSION: ${{ needs.auto-merge.outputs.version }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ needs.auto-merge.outputs.version }}
+        release_name: ${{ needs.auto-merge.outputs.version }}
+        draft: false
+        prerelease: false
