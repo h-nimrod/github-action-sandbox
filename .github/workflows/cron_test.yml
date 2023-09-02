@@ -50,6 +50,7 @@ jobs:
         fi
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
   create-tag:
     needs: auto-merge
     runs-on: ubuntu-latest
