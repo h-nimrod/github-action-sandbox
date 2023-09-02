@@ -11,6 +11,8 @@ on:
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
+	outputs:
+	  version: ${{ steps.automerge.outputs.version }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -37,6 +39,7 @@ jobs:
         echo "Detected version: $VERSION"
 
     - name: Auto merge PR
+	  id: automerge
       run: |
         echo "version: $VERSION"
         echo $(gh pr list --base main --head release/v$VERSION --json number)
@@ -44,12 +47,10 @@ jobs:
         if [ "$PR_NUMBER" != "null" ]; then
           gh pr merge $PR_NUMBER --merge
           echo "Merged PR #$PR_NUMBER"
-          echo "IS_MERGED=true" >> $GITHUB_STATE
         else
           echo "No matching PR found"
-          echo "IS_MERGED=true" >> $GITHUB_STATE
         fi
-        echo "VERSION=v$VERSION" >> $GITHUB_OUTPUT
+        echo "version=v$VERSION" >> $GITHUB_OUTPUT
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
@@ -62,7 +63,5 @@ jobs:
     - name: test
       run: |
         echo "version: $VERSION"
-        echo "is_merged: $IS_MERGED"
       env:
-        VERSION: ${{ needs.auto-merge.outputs.VERSION }}
-        IS_MERGED: ${{ needs.auto-merge.states.IS_MERGED }}
+        VERSION: ${{ needs.auto-merge.outputs.version }}
