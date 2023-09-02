@@ -58,8 +58,8 @@ jobs:
     needs: auto-merge
     if: $VERSION != ""
     runs-on: ubuntu-latest
-	env:
-	  VERSION: ${{ needs.auto-merge.outputs.version }}
+    env:
+      VERSION: ${{ needs.auto-merge.outputs.version }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
