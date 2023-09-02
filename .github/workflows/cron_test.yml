@@ -66,9 +66,8 @@ jobs:
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        VERSION: ${{ needs.auto-merge.outputs.version }}
       with:
-        tag_name: $VERSION
-        release_name: $VERSION
+        tag_name: ${{ needs.auto-merge.outputs.version }}
+        release_name: ${{ needs.auto-merge.outputs.version }}
         draft: false
         prerelease: false
