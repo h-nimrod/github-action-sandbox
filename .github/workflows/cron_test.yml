@@ -44,15 +44,17 @@ jobs:
         if [ "$PR_NUMBER" != "null" ]; then
           gh pr merge $PR_NUMBER --merge
           echo "Merged PR #$PR_NUMBER"
+          echo "IS_MERGED=true" >> $GITHUB_ENV
         else
           echo "No matching PR found"
-          exit 1
+          echo "IS_MERGED=true" >> $GITHUB_ENV
         fi
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
   create-tag:
     needs: auto-merge
+    if: needs.auto-merge.outputs.IS_MERGED == 'true'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
