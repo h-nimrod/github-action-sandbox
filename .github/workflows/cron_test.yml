@@ -40,7 +40,7 @@ jobs:
       run: |
         echo "version: $VERSION"
         echo $(gh pr list --base main --head release/v$VERSION --json number)
-        PR_NUMBER=$(gh pr list --base main --head release/v$VERSION --json number '.[0].number')
+        PR_NUMBER=$(gh pr list --base main --head release/v$VERSION --json number | jq '.[0].number')
         if [ $? > 0 ]; then
           echo "No matching PR found"
         elif [ "$PR_NUMBER" != "null" ]; then
