@@ -57,6 +57,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-    - name: test
-      run: |
-        echo "version: $VERSION"
+      - name: test
+        run: |
+          echo "version: $VERSION"
