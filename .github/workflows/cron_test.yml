@@ -47,7 +47,7 @@ jobs:
           gh pr merge $PR_NUMBER --merge
           echo "Merged PR #$PR_NUMBER"
         else
-		  echo "PR_NUMBER"
+          echo "PR_NUMBER"
           echo "No matching PR found"
         fi
       env:
