@@ -7,4 +7,3 @@ PRがマージされたときに自動的にリリースとタグを作成する
 - [README](./simple_tag)
 - [code](.github/workflows/simple_tag.yml)
 
-
