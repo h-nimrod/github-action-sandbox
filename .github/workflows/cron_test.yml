@@ -40,8 +40,10 @@ jobs:
       run: |
         echo "version: $VERSION"
         echo $(gh pr list --base main --head $VERSION)
-        PR_NUMBER=$(gh pr list --base main --head release/v1.2.3 --json number --jq '.[0].number')
-        if [ "$PR_NUMBER" != "null" ]; then
+        PR_NUMBER=$(gh pr list --base main --head release/v$VERSION --json number --jq '.[0].number')
+		if [ $? > 0 ]; then
+          echo "No matching PR found"
+		elif [ "$PR_NUMBER" != "null" ]; then
           gh pr merge $PR_NUMBER --merge
           echo "Merged PR #$PR_NUMBER"
         else
