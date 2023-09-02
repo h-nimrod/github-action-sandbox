@@ -55,8 +55,8 @@ jobs:
     needs: auto-merge
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: test
-        run: |
-          echo "version: $VERSION"
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: test
+      run: |
+        echo "version: $VERSION"
