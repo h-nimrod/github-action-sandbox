@@ -62,5 +62,7 @@ jobs:
     - name: test
       run: |
         echo "version: $VERSION"
+        echo "is_merged: $IS_MERGED"
       env:
-        VERSION: ${{ needs.auto-merge.VERSION }}
+        VERSION: ${{ needs.auto-merge.outputs.VERSION }}
+        IS_MERGED: ${{ needs.auto-merge.states.IS_MERGED }}
