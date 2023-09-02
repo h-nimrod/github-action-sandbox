@@ -44,11 +44,12 @@ jobs:
         if [ "$PR_NUMBER" != "null" ]; then
           gh pr merge $PR_NUMBER --merge
           echo "Merged PR #$PR_NUMBER"
-          echo "IS_MERGED=true" >> $GITHUB_ENV
+          echo "IS_MERGED=true" >> $GITHUB_STATE
         else
           echo "No matching PR found"
-          echo "IS_MERGED=true" >> $GITHUB_ENV
+          echo "IS_MERGED=true" >> $GITHUB_STATE
         fi
+        echo "VERSION=v$VERSION" >> $GITHUB_OUTPUT
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
@@ -61,3 +62,5 @@ jobs:
     - name: test
       run: |
         echo "version: $VERSION"
+      env:
+        VERSION: ${{ needs.auto-merge.VERSION }}
