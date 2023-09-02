@@ -1,9 +1,6 @@
 name: Test github actions
 
 on:
-  pull_request:
-    branches:
-      - main
   schedule:
     - cron: '0 8 * * *'
   workflow_dispatch:
