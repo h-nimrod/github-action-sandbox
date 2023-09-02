@@ -11,7 +11,6 @@ on:
 jobs:
   auto-merge:
     runs-on: ubuntu-latest
-    if: startsWith(github.head_ref, 'release/v')
 	steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -38,15 +37,13 @@ jobs:
         echo "Detected version: $VERSION"
 
     - name: Auto merge PR
-      uses: pascalgn/automerge-action@v0.15.6
+      run: |
+        PR_NUMBER=$(gh pr list --base main --head releaser/v1.2.3 --json number --jq '.[0].number')
+        if [ "$PR_NUMBER" != "null" ]; then
+          gh pr merge $PR_NUMBER --merge
+          echo "Merged PR #$PR_NUMBER"
+        else
+          echo "No matching PR found"
+        fi
       env:
-        MERGE_LABELS: ""
-        MERGE_METHOD: "merge"
-        MERGE_COMMIT_MESSAGE: "automatic merge"
-        MERGE_FORKS: "false"
-        MERGE_RETRIES: "6"
-        MERGE_RETRY_SLEEP: "10000"
-        UPDATE_LABELS: ""
-        UPDATE_METHOD: "merge"
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        LOG: "DEBUG"
