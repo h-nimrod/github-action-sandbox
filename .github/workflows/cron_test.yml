@@ -56,8 +56,10 @@ jobs:
 
   create-tag:
     needs: auto-merge
-    if: ${{ needs.auto-merge.outputs.version }} != ""
+    if: $VERSION != ""
     runs-on: ubuntu-latest
+	env:
+	  VERSION: ${{ needs.auto-merge.outputs.version }}
     steps:
     - name: Checkout
       uses: actions/checkout@v2
@@ -66,7 +68,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ needs.auto-merge.outputs.version }}
-        release_name: ${{ needs.auto-merge.outputs.version }}
+        tag_name: $VERSION
+        release_name: $VERSION
         draft: false
         prerelease: false
