@@ -2,7 +2,7 @@ name: Auto Merge Release PR
 
 on:
   schedule:
-    - cron: '30 * * * *'
+    - cron: '30 9 * * 1-5'
   workflow_dispatch:
 
 jobs:
