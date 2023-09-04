@@ -1,4 +1,4 @@
-name: Create PR on push to release branches
+name: Create PR on push to develop branches 
 
 on:
   push:
