@@ -15,7 +15,7 @@ jobs:
     - name: show and update value
       id: set_output
       run: |
-        echo "ext1=\"$((date))\"" >> $GITHUB_OUTPUT
+        echo "ext1=$(date)" >> $GITHUB_OUTPUT
         echo ${{ steps.set_output.outputs.ext1 }}
 
   job2:
