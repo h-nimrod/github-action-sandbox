@@ -26,8 +26,30 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
     - name: show value
       run: |
         echo "$ext1"
+
+  job3:
+    needs: job2
+    runs-on: ubuntu-latest
+    if $exp1 != ''
+    env:
+      ext1: ${{ needs.job1.outputs.ext1 }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: show value
+      run: |
+        echo "$ext1"
+
+  job4:
+    needs: job3
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: show value
+      run: |
+        echo $(date)
 
