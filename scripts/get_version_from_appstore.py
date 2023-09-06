@@ -38,7 +38,7 @@ if __name__ == "__main__":
     APP_ID = sys.argv[1]
     COUNTRY_CODE = None
     if len(sys.argv) > 2 and sys.argv[2] is not None:
-        ctr = sys.argv[2]
+        COUNTRY_CODE = sys.argv[2]
 
     version = get_app_version(APP_ID, COUNTRY_CODE)
     print(version, end="")
