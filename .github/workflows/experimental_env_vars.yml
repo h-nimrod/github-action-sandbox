@@ -31,7 +31,7 @@ jobs:
     - name: show value
       id: set_output
       run: |
-        echo "$ext1"
+        echo "$ext1: ext1"
         echo "ext2=$ext1" >> $GITHUB_OUTPUT
 
   job3:
@@ -45,7 +45,14 @@ jobs:
       uses: actions/checkout@v2
     - name: show value
       run: |
-        echo "$ext1"
-        echo "$ext2"
+        echo "ext1: $ext1"
+        echo "ext2: $ext2"
+
+  job4:
+    needs: job3
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
 
