@@ -23,33 +23,29 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ext1: ${{ needs.job1.outputs.ext1 }}
+    outputs:
+      ext2: ${{ steps.set_output.outputs.ext2 }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: show value
+      id: set_output
       run: |
         echo "$ext1"
+        echo "ext2=$ext1" >> $GITHUB_OUTPUT
 
   job3:
     needs: job2
     runs-on: ubuntu-latest
-    if: needs.job1.outputs.ext1 != ''
     env:
       ext1: ${{ needs.job1.outputs.ext1 }}
+      ext2: ${{ needs.job2.outputs.ext2 }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: show value
       run: |
         echo "$ext1"
+        echo "$ext2"
 
-  job4:
-    needs: job3
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    - name: show value
-      run: |
-        echo $(date)
 
