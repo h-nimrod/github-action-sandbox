@@ -51,7 +51,7 @@ configurations {
 }
 
 dependencies {
-    ktlint "com.pinterest:ktlint:0.50.0"
+    ktlint "com.pinterest:ktlint:0.43.1"
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
     implementation 'androidx.activity:activity-compose:1.7.2'
@@ -71,15 +71,16 @@ dependencies {
 
 task ktlint(type: JavaExec, group: "verification") {
     description = "Check Kotlin code style."
+    mainClass.set("com.pinterest.ktlint.Main")
     classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
-    args "src/**/*.kt"
+    args "src/**/*.kt", "--color", "--reporter=plain", "--reporter=checkstyle,output=${buildDir}/ktlint.xml"
 }
+
 check.dependsOn ktlint
 
 task ktlintFormat(type: JavaExec, group: "formatting") {
     description = "Fix Kotlin code style deviations."
+    mainClass.set("com.pinterest.ktlint.Main")
     classpath = configurations.ktlint
-    main = "com.pinterest.ktlint.Main"
     args "-F", "src/**/*.kt"
 }
