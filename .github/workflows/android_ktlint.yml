@@ -3,7 +3,8 @@ name: Android Build and Ktlint Check
 on:
   pull_request:
     branches: [ main ]
-
+  workflow_dispatch:
+        
 jobs:
   ktlint_check:
     runs-on: ubuntu-latest
