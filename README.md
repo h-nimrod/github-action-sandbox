@@ -4,6 +4,6 @@
 
 PRがマージされたときに自動的にリリースとタグを作成するGiHub Actions
 
-- [README](./simple_tag)
+- [README](./docs/simple_tag)
 - [code](.github/workflows/simple_tag.yml)
 
